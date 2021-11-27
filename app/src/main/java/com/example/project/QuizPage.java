@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import android.view.inputmethod.InputMethodManager;
@@ -65,11 +66,12 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
     // FirebaseUser user;
 
     // 틀린 문제 번호 저장 리스트
-    ArrayList<Integer> wrongCheckList;
+     ArrayList<Integer> spellWrongCheckList = null;
+     ArrayList<Integer> meanWrongCheckList = null;
 
-    //여긴 그냥 객체 생성ㅋㅋ
-    // ReadAndWrite DBHelper;
-    // ListView listView;
+
+
+
 
 
     // 퀴즈 정답, 오답 변수
@@ -238,7 +240,7 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
         }
         else{
             // 스펠링 퀴즈 실행시
-                textView.setText(firebaseMeanList.get(0));
+            textView.setText(firebaseMeanList.get(0));
 
             // 배열 리스트 크기 값 저장
             allQuestion = firebaseMeanList.size();
@@ -258,6 +260,16 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
 
     // button 위젯 클릭 이벤트 발생 시 이벤트 콜백함수
     public void onClick(View view){
+
+        // 틀린 문제 번호 저장 리스트
+
+        if(spellWrongCheckList == null || meanWrongCheckList == null){
+            spellWrongCheckList = new ArrayList<>();
+            meanWrongCheckList = new ArrayList<>();
+        }
+
+
+
 
         if(divide == 0){
             // editText에 입력한 문자열 저장 변수
@@ -288,8 +300,9 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
                     imageView1.setVisibility(View.GONE);
                     imageView2.setVisibility(View.VISIBLE);
 
-                    // 틀린 문제 번호 저장
-                    // wrongCheckList.add(i+1);
+                    // 틀린 문제 저장
+                    spellWrongCheckList.add(i);
+                    meanWrongCheckList.add(i);
 
                 }
             }
@@ -324,7 +337,9 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
                     imageView2.setVisibility(View.VISIBLE);
 
                     // 틀린 문제 번호 저장
-                    // wrongCheckList.add(i+1);
+                    // 틀린 문제 저장
+                    spellWrongCheckList.add(i);
+                    meanWrongCheckList.add(i);
 
                 }
             }
@@ -345,7 +360,7 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
 
 
         i++;
-
+        Log.d("spellingWrongListSize", spellWrongCheckList.size() + "");
 
 
         // 진행바 값 설정
@@ -360,6 +375,8 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
             public void run() {
                 // 시간 지난 후 실행할 코딩
                 if(i<allQuestion) {
+
+
 
                     // 1초후 다시 키보드 보이게 하는 부분
                     InputMethodManager imm3 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -382,6 +399,8 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
                         editText.setText(""); // 버튼 클릭시 editText 빈칸 처리
                         progressBar.setProgress((100 / firebaseMeanList.size()) * i);
                     }
+
+
                 }
 
                 // 리스트 문제 다 해결시 채점 화면으로 전환
@@ -399,7 +418,8 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
                                 intent.putExtra("meanList", firebaseMeanList);
                                 intent.putExtra("spellingList", firebaseSpellingList);
                                 // intent.putExtra("UID", UserId);
-                                // intent.putExtra("wrongCheck", wrongCheckList);
+                                Log.d("total spellingWrongSize", spellWrongCheckList.size() + "");
+                                 intent.putExtra("wrongCheck", spellWrongCheckList);
                                 startActivity(intent);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();

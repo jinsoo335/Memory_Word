@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -69,6 +70,7 @@ public class ScoringPage extends AppCompatActivity {
         wrongCheckList = (ArrayList<Integer>) getIntent().getSerializableExtra("wrongCheck");
         UserId = (String)getIntent().getSerializableExtra("UID");
         i = (int)getIntent().getSerializableExtra("lastAll");
+        Log.d("wrongListSize", wrongCheckList.size() + "");
 
 
         textView2.setText("맞은 갯수="+(i-firebaseMeanList.size())+", 틀린 갯수="+firebaseMeanList.size());

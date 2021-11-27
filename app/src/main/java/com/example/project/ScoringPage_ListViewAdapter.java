@@ -44,7 +44,7 @@ public class ScoringPage_ListViewAdapter extends BaseAdapter {
         ScoringPage_ListViewItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        wrongTextView.setText(listViewItem.getWrongAll());
+        wrongTextView.setText(listViewItem.getWrongAll() + "");
         titleTextView.setText(listViewItem.getTitle());
         descTextView.setText(listViewItem.getDesc());
 
@@ -62,6 +62,9 @@ public class ScoringPage_ListViewAdapter extends BaseAdapter {
         return listViewItemList.get(position) ;
     }
 
+
+
+
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(int wrongAll, String title, String desc) {
         ScoringPage_ListViewItem item = new ScoringPage_ListViewItem();
@@ -72,5 +75,7 @@ public class ScoringPage_ListViewAdapter extends BaseAdapter {
 
         listViewItemList.add(item);
     }
+
+
 
 }
