@@ -4,21 +4,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/title"
+
+    <EditText
+        android:id="@+id/mean_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="mean and spelling" />
+        android:hint="단어 뜻을 입력해주세요" />
+
+    <EditText
+        android:id="@+id/spelling_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="스팰링을 입력해주세요" />
+
+    <Button
+        android:id="@+id/save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="저장" />
+
+    <Button
+        android:id="@+id/test_fix_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="수정" />
+
+    <Button
+        android:id="@+id/test_del_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="삭제" />
+
 
     <ListView
         android:id="@+id/mean_spelling_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
-
-
-
-
 
 
 </LinearLayout>

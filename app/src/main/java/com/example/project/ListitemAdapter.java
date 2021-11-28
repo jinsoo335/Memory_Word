@@ -149,7 +149,7 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
                             Thread.sleep(100);
 
                             Intent intent = new Intent(context, QuizPage.class);
-                            intent.putExtra("nameList", nameList);
+                            intent.putExtra("list name", listName);
                             intent.putExtra("meanList", meanList);
                             intent.putExtra("spellingList", spellingList);
                             intent.putExtra("divide", divide);
@@ -184,7 +184,7 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
                             Thread.sleep(100);
 
                             Intent intent = new Intent(context, MeanAndSpellingPage.class);
-                            intent.putExtra("nameList", nameList);
+                            intent.putExtra("list name", listName);
                             intent.putExtra("meanList", meanList);
                             intent.putExtra("spellingList", spellingList);
                             intent.putExtra("UID", userID);

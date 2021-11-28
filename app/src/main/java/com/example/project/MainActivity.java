@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String UID = user.getUid();
         user.delete();
 
-        DBHelper.rootDatabase.child(UID).setValue("");
+        DBHelper.rootDatabase.child(UID).removeValue();
     }
 
     @Override

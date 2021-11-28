@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class WordsAdapter extends ArrayAdapter<Listitem> {
+public class WordsAdapter extends ArrayAdapter<Listitem> implements View.OnClickListener{
 
     String userID;
     String listName;
@@ -22,6 +24,9 @@ public class WordsAdapter extends ArrayAdapter<Listitem> {
     Context context;
     int resID;
     ArrayList<Listitem> items;
+
+    Button wordFixBtn;
+    Button wordDeleteBtn;
 
     public WordsAdapter(Context context, int resID, ArrayList<Listitem> items, String userID,
                         String listName, ArrayList<String> meanList, ArrayList<String> spellingList){
@@ -57,6 +62,9 @@ public class WordsAdapter extends ArrayAdapter<Listitem> {
         TextView meanText = convertView.findViewById(R.id.mean_text);
         TextView spellingText = convertView.findViewById(R.id.spelling_text);
 
+        wordFixBtn = convertView.findViewById(R.id.word_fix_btn);
+        wordDeleteBtn = convertView.findViewById(R.id.word_delete_btn);
+
         Listitem item = items.get(position);
 
         meanText.setText(item.getListname());
@@ -66,4 +74,13 @@ public class WordsAdapter extends ArrayAdapter<Listitem> {
     }
 
 
+    @Override
+    public void onClick(View view) {
+        if(view == wordFixBtn){
+
+        }
+        else if(view == wordDeleteBtn){
+
+        }
+    }
 }
