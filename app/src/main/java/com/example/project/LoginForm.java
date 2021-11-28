@@ -39,12 +39,8 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
 
     Button googleSignBtn;
     Button annonymousBtn;
-    Button signCombineBtn;
     Button signOutBtn;
 
-    TextView naverBtn;
-    //OAuthLogin mOAuthLoginModule;
-    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +65,9 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
         googleSignBtn = findViewById(R.id.Button_glogin);
         googleSignBtn.setOnClickListener(this);
 
-        signCombineBtn = findViewById(R.id.sign_combine_btn);
-        signCombineBtn.setOnClickListener(this);
-
         signOutBtn = findViewById(R.id.signOut_btn);
         signOutBtn.setOnClickListener(this);
 
-        naverBtn = findViewById(R.id.tv_naver);
-        mContext = getApplicationContext();
     }
 
     // 생명주기 함수로 onCreate() 이후 실행 된다.
@@ -86,7 +77,6 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //Log.d("LoginForm의 ", "onStart(), " + currentUser.getUid());
         Log.d("LoginForm의 ", "user " + getUser());
         updateUI(currentUser);
 
@@ -116,14 +106,7 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
                 // Google Sign이 성공했다면, GoogleSignInAccount 객체에서 ID토큰을 가져와서
                 // Firebase 사용자 인증 정보로 교환하고 해당 정보를 사용해 Firebase에 인증
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-
-                if(getUser() != null){
-                    AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-                    MainActivity.linkAndMerge(credential);
-                }
-                else{
-                    firebaseAuthWithGoogle(account.getIdToken());
-                }
+                firebaseAuthWithGoogle(account.getIdToken());
 
 
             } catch (ApiException e) {
@@ -199,30 +182,6 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
                 });
     }
 
-    // 계정 합치기...
-    public void linkAndMerge(AuthCredential credential){
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-        FirebaseUser prevUser = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseAuth.getInstance().signOut();
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        FirebaseUser currentUser = task.getResult().getUser();
-                        Log.d("current user", currentUser.getUid());
-                        Log.d("prev user", prevUser.getUid());
-
-                        ReadAndWrite prevDB = new ReadAndWrite(prevUser.getUid());
-                        ReadAndWrite currnetDB = new ReadAndWrite(currentUser.getUid());
-                        currnetDB.getFirstListListener();
-                        prevDB.getFirstListListener();
-
-                        currnetDB.mergeDatabase(prevDB);
-                        //prevUser.delete();
-                    }
-                });
-    }
 
     public void unlink(String providerId){
         mAuth.getCurrentUser().unlink(providerId)
@@ -263,6 +222,7 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
                     try {
                         signIn();
                         Thread.sleep(1000);
+
                         startActivity(new Intent(LoginForm.this, MainActivity.class));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -273,57 +233,25 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
 
         }
         else if(view == annonymousBtn){
-            signInAnonymously();
-            startActivity(new Intent(this, MainActivity.class));
-        }
-        else if(view == signCombineBtn){
-            Log.d("signCombineBtn","불려짐");
-            signIn();
+            Thread signThread = new Thread("signThread"){
+                @Override
+                public void run() {
+                    super.run();
+                    try {
+                        signInAnonymously();
+                        Thread.sleep(100);
+
+                        startActivity(new Intent(LoginForm.this, MainActivity.class));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            signThread.start();
         }
         else if(view == signOutBtn){
             FirebaseAuth.getInstance().signOut();
         }
-
-        else if(view == naverBtn){
-//            mOAuthLoginModule = OAuthLogin.getInstance();
-//            mOAuthLoginModule.init(
-//                    mContext
-//                    ,getString(R.string.naver_client_id)
-//                    ,getString(R.string.naver_client_secret)
-//                    ,getString(R.string.naver_client_name)
-//                    //,OAUTH_CALLBACK_INTENT
-//                    // SDK 4.1.4 버전부터는 OAUTH_CALLBACK_INTENT변수를 사용하지 않습니다.
-//            );
-//
-//            @SuppressLint("HandlerLeak")
-//            OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
-//                @Override
-//                public void run(boolean success) {
-//                    if (success) {
-//                        String accessToken = mOAuthLoginModule.getAccessToken(mContext);
-//                        String refreshToken = mOAuthLoginModule.getRefreshToken(mContext);
-//                        long expiresAt = mOAuthLoginModule.getExpiresAt(mContext);
-//                        String tokenType = mOAuthLoginModule.getTokenType(mContext);
-//
-//                        Log.i("LoginData","accessToken : "+ accessToken);
-//                        Log.i("LoginData","refreshToken : "+ refreshToken);
-//                        Log.i("LoginData","expiresAt : "+ expiresAt);
-//                        Log.i("LoginData","tokenType : "+ tokenType);
-//
-//                    } else {
-//                        String errorCode = mOAuthLoginModule
-//                                .getLastErrorCode(mContext).getCode();
-//                        String errorDesc = mOAuthLoginModule.getLastErrorDesc(mContext);
-//                        Toast.makeText(mContext, "errorCode:" + errorCode
-//                                + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT).show();
-//                    }
-//                };
-//            };
-//            mOAuthLoginModule.startOauthLoginActivity(LoginForm.this, mOAuthLoginHandler);
-
-
-        }
-
 
     }
 }

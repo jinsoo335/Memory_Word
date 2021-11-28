@@ -79,11 +79,6 @@
         android:textColor="#ffffff"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/sign_combine_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="익명을 구글 계정과 통합..." />
 
     <Button
         android:id="@+id/signOut_btn"

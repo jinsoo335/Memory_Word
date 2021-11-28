@@ -51,6 +51,18 @@
         android:layout_height="wrap_content"
         android:text="수정" />
 
+    <Button
+        android:id="@+id/sign_merge_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="익명 구글 통합" />
+
+    <Button
+        android:id="@+id/sign_delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="계정 삭제" />
+
     <ListView
         android:id="@+id/list_view"
         android:layout_width="wrap_content"

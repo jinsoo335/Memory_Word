@@ -59,26 +59,6 @@ public class ReadAndWrite implements Serializable {
 
     }
 
-    public void mergeDatabase(ReadAndWrite prev){
-        Log.d("두 계정 연동", "시작...");
-        prev.getFirstListListener();
-        getFirstListListener();
-
-        //Log.d("current", this.nameList.get(0));
-        //Log.d("prev", prev.nameList.get(0));
-
-        if(prev.nameList.size() != 0){
-            Log.d("" + prev.nameList.get(0), "" + this.nameList.get(0));
-
-            for(int i =0; i < prev.nameList.size(); i++){
-                for(int j=0; j < prev.spellingList.size(); j++){
-                    this.writeNewWord(prev.nameList.get(i), prev.meanList.get(j), prev.spellingList.get(j));
-                }
-            }
-        }
-
-
-    }
 
     // 새롭게 단어를 받을 때 사용, 기본적으로 spelling을 리스트의 key로 삼아 저장
     // 데이터의 생성과 수정의 역할을 동시에 수행한다.
@@ -89,7 +69,6 @@ public class ReadAndWrite implements Serializable {
             @Override
             public void run() {
                 super.run();
-
                 try {
                     Thread.sleep(10);
                     userDatabase.child(listName).child(spelling).setValue(mean);
