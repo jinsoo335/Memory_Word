@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/setting_sign_merge_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구글 계정 연동" />
+
+    <Button
+        android:id="@+id/setting_signOut_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그 아웃"/>
+
+    <Button
+        android:id="@+id/setting_sign_delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="계정 삭제" />
+
+</LinearLayout>
+

@@ -43,6 +43,11 @@ public class List extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        getSupportActionBar().setIcon(R.drawable.tree_icon);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+
         showText = findViewById(R.id.show_list_btn);
 
         nameList =  (ArrayList<String>) getIntent().getSerializableExtra("nameList");

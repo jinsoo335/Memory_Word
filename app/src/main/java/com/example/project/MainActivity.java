@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -33,12 +34,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static int check = 0;
 
+
     FirebaseUser user;
     String userID;
     String listName;
     ReadAndWrite DBHelper;
 
     Button quizBtn;
+    Button setting_btn;
 
     EditText listname;
     EditText meanView;
@@ -48,9 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button deleteBtn;
     ListView listView;
 
-    Button signPageBtn;
-    Button signMergeBtn;
-    Button signDeleteBtn;
+
 
     ArrayList<String> nameList;
     ArrayList<String> meanList;
@@ -61,33 +62,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listname= findViewById(R.id.listname);
-        meanView = findViewById(R.id.mean_view);
-        spellingView = findViewById(R.id.spelling_view);
-        saveBtn = findViewById(R.id.save_btn);
-        loadBtn = findViewById(R.id.load_btn);
-        deleteBtn = findViewById(R.id.delete_btn);
-        listView = findViewById(R.id.list_view);
+        getSupportActionBar().setIcon(R.drawable.tree_icon);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         quizBtn = findViewById(R.id.quiz_btn);
         quizBtn.setOnClickListener(this);
 
-        signPageBtn = findViewById(R.id.sign_page);
-        signPageBtn.setOnClickListener(this);
+        setting_btn =findViewById(R.id.setting_btn);
+        setting_btn.setOnClickListener(this);
 
-        signMergeBtn = findViewById(R.id.sign_merge_btn);
-        signMergeBtn.setOnClickListener(this);
-
-        signDeleteBtn = findViewById(R.id.sign_delete_btn);
-        signDeleteBtn.setOnClickListener(this);
-
-        saveBtn.setOnClickListener(this);
-        loadBtn.setOnClickListener(this);
-        deleteBtn.setOnClickListener(this);
-
-        nameList = new ArrayList<>();
+        if( getIntent().getSerializableExtra("nameList") == null){
+            nameList = new ArrayList<>();
+        }
+        else{
+            nameList = (ArrayList<String>) getIntent().getSerializableExtra("nameList");
+        }
         meanList = new ArrayList<>();
         spellingList = new ArrayList<>();
+
 
     }
 
@@ -125,29 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         updateUI();
 
-        String listName = listname.getText().toString();
-        String mean = meanView.getText().toString();
-        String spelling = spellingView.getText().toString();
-
-        if(view == saveBtn){
-            if(!listName.equals("") && !mean.equals("") && !spelling.equals("")){
-                DBHelper.writeNewWord(listName, mean, spelling);
-            }
-        }
-        else if(view == loadBtn){
-            //DBHelper.writeNewList("new!");
-            //DBHelper.writeNewWord("new!", mean, spelling);
-            //DBHelper.updateWord(listName, mean, spelling);
-        }
-        else if(view == signPageBtn){
-            startActivity(new Intent(this, LoginForm.class));
-        }
-        else if(view == deleteBtn){
-            if(!listName.equals("") && !mean.equals("") && !spelling.equals("")){
-                DBHelper.deleteWord(listName, spelling);
-            }
-        }
-        else if(view == quizBtn){
+        if(view == quizBtn){
             // 스레드 생성할 때 이렇게...
             Thread meanThread = new Thread("mean Thread"){
                 public void run(){
@@ -173,121 +144,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             meanThread.start();
         }
 
-        else if(view == signMergeBtn){
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken("773840236497-q3tpj1nlqgh0ekm7u4m8avdurhk7q2pn.apps.googleusercontent.com")
-                    .requestEmail()
-                    .build();
+        else if(view == setting_btn){
+            Intent intent = new Intent(this, SettingPage.class);
+            startActivity(intent);
 
-            GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, 15);
-        }
-        else if(view == signDeleteBtn){
-            if(user != null){
-                deleteUser();
-            }
-            else{
-                Toast toast = Toast.makeText(this, "로그인 되어 있는 유저가 없습니다. ", Toast.LENGTH_SHORT);
-                toast.show();
-            }
         }
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, meanList);
-        listView.setAdapter(arrayAdapter);
     }
-
-    private void deleteUser(){
-        String UID = user.getUid();
-        user.delete();
-
-        DBHelper.rootDatabase.child(UID).removeValue();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // signInIntent로 보낸게 맞는지.. 옆에 requestCode를 같이 보내 같은 requestcode를 받으면 동일 인텐트
-        if (requestCode == 15) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign이 성공했다면, GoogleSignInAccount 객체에서 ID토큰을 가져와서
-                // Firebase 사용자 인증 정보로 교환하고 해당 정보를 사용해 Firebase에 인증
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-
-                AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-                Log.d("합병쪽 crendtial", credential + "");
-                linkAndMerge(credential);
-
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-            }
-        }
-    }
-
-    // 계정 합치기...
-    public void linkAndMerge(AuthCredential credential){
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-        FirebaseUser prevUser = FirebaseAuth.getInstance().getCurrentUser();
-        String prevUID = prevUser.getUid();
-
-        FirebaseAuth.getInstance().signOut();
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        FirebaseUser currentUser = task.getResult().getUser();
-                        String currentUID = currentUser.getUid();
-                        Log.d("current user", currentUID);
-                        Log.d("prev user", prevUID);
-
-                        ArrayList<String> prevNameList = new ArrayList<>();
-                        ArrayList<String> prevMeanList = new ArrayList<>();
-                        ArrayList<String> prevSpellingList = new ArrayList<>();
-
-                        ArrayList<String> currentNameList = new ArrayList<>();
-                        ArrayList<String> currentMeanList = new ArrayList<>();
-                        ArrayList<String> currentSpellingList = new ArrayList<>();
-
-                        ReadAndWrite prevDBHelper = new ReadAndWrite(prevUID, prevNameList, prevMeanList, prevSpellingList);
-                        ReadAndWrite currentDBHelper = new ReadAndWrite(currentUID, currentNameList, currentMeanList, currentSpellingList);
-                        prevDBHelper.getFirstListListener();
-                        currentDBHelper.getFirstListListener();
-
-                        Thread copyThread = new Thread("copyThread"){
-                            @Override
-                            public void run() {
-                                super.run();
-                                try {
-                                    Thread.sleep(10);
-                                    for(int i =0; i < prevDBHelper.nameList.size(); i++){
-                                        String listName = prevDBHelper.nameList.get(i);
-                                        prevDBHelper.getFirstListListener(listName);
-                                        currentDBHelper.getFirstListListener(listName);
-                                        Thread.sleep(100);
-
-                                        for(int j =0; j < prevDBHelper.meanList.size(); j++){
-                                            Log.d(j + "번 mean List", prevMeanList.get(j));
-                                            String mean = prevMeanList.get(j);
-                                            String spelling = prevSpellingList.get(j);
-                                            currentDBHelper.userDatabase.child(listName).child(spelling).setValue(mean);
-                                            currentDBHelper.writeNewWord(listName, mean, spelling);
-                                        }
-                                    }
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-                        copyThread.start();
-
-
-
-                    }
-                });
-    }
-
 }

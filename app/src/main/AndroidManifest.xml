@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project">
         <activity
+            android:name=".SettingPage"
+            android:exported="false" />
+        <activity
             android:name=".WrongPage"
             android:exported="false" />
         <activity
@@ -46,11 +49,11 @@
         <activity
             android:name=".SignPart"
             android:exported="true"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".LoginForm"
             android:exported="true"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

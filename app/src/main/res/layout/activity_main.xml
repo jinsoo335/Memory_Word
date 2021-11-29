@@ -2,70 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+
+    >
 
     <Button
         android:id="@+id/quiz_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="퀴즈" />
+        android:text="단어장 목록"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="27dp"
+        android:background="@color/black"
+        android:width="412dp"
+        android:height="365dp"
+        />
 
     <Button
-        android:id="@+id/sign_page"
+        android:id="@+id/setting_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sign page" />
-    <EditText
-        android:id="@+id/listname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="리스트를 입력해주세요" />
+        android:text="설정"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="27dp"
+        android:background="@color/black"
+        android:width="412dp"
+        android:height="365dp"
+        />
 
-    <EditText
-        android:id="@+id/mean_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="단어 뜻을 입력해주세요" />
-
-    <EditText
-        android:id="@+id/spelling_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="스팰링을 입력해주세요" />
-
-    <Button
-        android:id="@+id/save_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="저장" />
-
-    <Button
-        android:id="@+id/delete_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="삭제" />
-
-    <Button
-        android:id="@+id/load_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="수정" />
-
-    <Button
-        android:id="@+id/sign_merge_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="익명 구글 통합" />
-
-    <Button
-        android:id="@+id/sign_delete_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="계정 삭제" />
-
-    <ListView
-        android:id="@+id/list_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

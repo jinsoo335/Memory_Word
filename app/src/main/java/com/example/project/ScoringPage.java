@@ -103,7 +103,7 @@ public class ScoringPage extends AppCompatActivity {
         for(int j = 0; j < wrongCheckList.size(); j++) {
             // 아이템 추가.
             // ArrayList 틀린 문제로 수정
-            adapter.addItem(wrongCheckList.get(j),
+            adapter.addItem(wrongCheckList.get(j)+1,
                     firebaseMeanList.get(wrongCheckList.get(j)), firebaseSpellingList.get(wrongCheckList.get(j)));
             ScoringFirebaseMeanList.add(firebaseMeanList.get(wrongCheckList.get(j)));
             ScoringFirebaseSpellingList.add(firebaseSpellingList.get(wrongCheckList.get(j)));

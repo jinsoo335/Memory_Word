@@ -40,19 +40,23 @@ public class MeanAndSpellingPage extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mean_and_spelling_page);
 
+        getSupportActionBar().setIcon(R.drawable.tree_icon);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         title = findViewById(R.id.title);
         listView = findViewById(R.id.mean_spelling_list);
 
-        listName =  (String) getIntent().getSerializableExtra("list name");
-        meanList =  (ArrayList<String>) getIntent().getSerializableExtra("meanList");
-        spellingList =  (ArrayList<String>) getIntent().getSerializableExtra("spellingList");
-        userID = (String)getIntent().getSerializableExtra("UID");
+        listName = (String) getIntent().getSerializableExtra("list name");
+        meanList = (ArrayList<String>) getIntent().getSerializableExtra("meanList");
+        spellingList = (ArrayList<String>) getIntent().getSerializableExtra("spellingList");
+        userID = (String) getIntent().getSerializableExtra("UID");
 
         DBHelper = new ReadAndWrite(userID, new ArrayList<>(), meanList, spellingList);
         Log.d("list name 은 ", listName);
 
         ArrayList<Listitem> items = new ArrayList<>();
-        for(int i =0; i < spellingList.size(); i++){
+        for (int i = 0; i < spellingList.size(); i++) {
             items.add(new Listitem(spellingList.get(i), meanList.get(i)));
         }
 
@@ -64,21 +68,14 @@ public class MeanAndSpellingPage extends AppCompatActivity implements View.OnCli
 
 
         //2
-        meanView= findViewById(R.id.mean_view);
-        spellingView= findViewById(R.id.spelling_view);
+        meanView = findViewById(R.id.mean_view);
+        spellingView = findViewById(R.id.spelling_view);
         saveBtn = findViewById(R.id.save_btn);
 
         //3
         saveBtn.setOnClickListener(this);
 
-        testFixBtn = findViewById(R.id.test_fix_btn);
-        testDelBtn = findViewById(R.id.test_del_btn);
-
-        testFixBtn.setOnClickListener(this);
-        testDelBtn.setOnClickListener(this);
-
     }
-
     //4
     @Override
     public void onClick(View view){
@@ -88,18 +85,6 @@ public class MeanAndSpellingPage extends AppCompatActivity implements View.OnCli
         if(view == saveBtn){
             if(!mean.equals("") && !spelling.equals("")){
                 DBHelper.writeNewWord(listName, mean, spelling);
-            }
-        }
-        else if(view == testFixBtn){
-            if(!mean.equals("") && !spelling.equals("")){
-                DBHelper.writeNewWord(listName, mean, spelling);
-            }
-
-        }
-        else if(view == testDelBtn){
-            if(!mean.equals("") && !spelling.equals("")){
-                DBHelper.deleteWord(listName, spelling);
-                DBHelper.getFirstListListener(listName);
             }
         }
 

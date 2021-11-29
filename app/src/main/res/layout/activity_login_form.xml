@@ -71,13 +71,6 @@
         >
     </Button>
 
-    <TextView
-        android:id="@+id/tv_naver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="네이버로 시작하기"
-        android:textColor="#ffffff"
-        android:textStyle="bold" />
 
 
     <Button

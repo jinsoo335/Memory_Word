@@ -8,23 +8,20 @@
         android:id="@+id/title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="오답"
-        android:textSize="16dp"
-        android:paddingLeft="16dp" />
+        android:text="오답번호"
+        android:textSize="20dp"
+        android:paddingLeft="30dp"
+        android:fontFamily="@font/nanumbold"/>
 
     <TextView
         android:id="@+id/title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="뜻"
-        android:textSize="16dp" />
+        android:text="단어"
+        android:textSize="20dp"
+        android:paddingLeft="30dp"
+        android:fontFamily="@font/nanumbold"/>
 
-    <TextView
-        android:id="@+id/title3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="스펠링"
-        android:textSize="16dp"
-        />
+
 
 </LinearLayout>

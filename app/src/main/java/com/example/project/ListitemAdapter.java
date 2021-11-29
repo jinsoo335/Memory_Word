@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
     Button quizPageMeanBtn;
     Button quizPageSpellingBtn;
 
+    ImageView woodImage;
     // 뜻, 스펠링 구분 정수
     int divide;
 
@@ -87,6 +89,7 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
         quizPageMeanBtn = holder.quizPageBtn_Mean;
         quizPageSpellingBtn = holder.quizPageBtn_Spelling;
 
+        woodImage = holder.woodImage;
 
         Listitem item = items.get(position);
 

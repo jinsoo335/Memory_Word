@@ -14,41 +14,60 @@
         android:layout_height="wrap_content"
         android:text="채점 결과"
         android:textSize="50dp"
+        android:fontFamily="@font/nanumbold"
+        android:paddingTop="20dp"
         />
     <TextView
         android:id="@+id/textview2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:fontFamily="@font/nanumbold"
+        android:paddingTop="20dp"
         />
 
     <TextView
         android:id="@+id/textview3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:fontFamily="@font/nanumbold"
+        android:paddingTop="20dp"
         />
-
-
-    <ListView
-        android:id="@+id/listview1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="틀린 문제 다시 풀기"
+        android:text="  틀린 문제 다시 풀기  "
         android:onClick="onClick"
+        android:fontFamily="@font/nanumori"
+
+        android:background="@drawable/button_border"
+
         />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="메인으로 돌아가기"
+        android:text="   메인으로 돌아가기   "
         android:onClick="onClick"
+        android:fontFamily="@font/nanumori"
+
+        android:background="@drawable/button_border"
         />
+
+
+    <ListView
+        android:id="@+id/listview1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        />
+
+
+
 
 
 </LinearLayout>

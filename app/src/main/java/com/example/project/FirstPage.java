@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 public class FirstPage extends AppCompatActivity{
 
     FirebaseAuth mAuth;
@@ -20,6 +22,11 @@ public class FirstPage extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page);
+
+        setContentView(R.layout.activity_first_page);
+        getSupportActionBar().setIcon(R.drawable.tree_icon);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         ViewGroup linear = findViewById(R.id.linear_viewGroup);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -31,7 +38,28 @@ public class FirstPage extends AppCompatActivity{
 
                 if(mUser != null){
                     Log.d("user", mUser.getUid());
-                    startActivity(new Intent(FirstPage.this, MainActivity.class));
+
+                    ArrayList<String> nameList = new ArrayList<>();
+                    ReadAndWrite DBHelper = new ReadAndWrite(mUser.getUid(), nameList, new ArrayList<>(), new ArrayList<>());
+                    DBHelper.getFirstListListener();
+
+                    Thread slowThread = new Thread("slowThread"){
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                Thread.sleep(500);
+                                Intent intent = new Intent(FirstPage.this, MainActivity.class);
+                                intent.putExtra("nameList", nameList);
+                                startActivity(intent);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    slowThread.start();
+
+
                 }
                 else{
                     Log.d("user", null + "");
