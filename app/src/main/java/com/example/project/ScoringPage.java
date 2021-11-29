@@ -22,6 +22,10 @@ public class ScoringPage extends AppCompatActivity {
     ArrayList<String> firebaseNameList;
     ArrayList<String> firebaseMeanList;
     ArrayList<String> firebaseSpellingList;
+
+    ArrayList<String> ScoringFirebaseMeanList = new ArrayList<>();
+    ArrayList<String> ScoringFirebaseSpellingList = new ArrayList<>();
+
     String UserId;
 
     TextView textView1;
@@ -35,6 +39,9 @@ public class ScoringPage extends AppCompatActivity {
 
     // 전 리스트 전체 문제 갯수
     int i;
+
+    //틀린 문제 페이지 초기화 변수
+    // int scoringDivide;
 
 
     @Override
@@ -64,6 +71,7 @@ public class ScoringPage extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         firebaseNameList =  (ArrayList<String>) getIntent().getSerializableExtra("nameList");
         firebaseMeanList =  (ArrayList<String>) getIntent().getSerializableExtra("meanList");
         firebaseSpellingList =  (ArrayList<String>) getIntent().getSerializableExtra("spellingList");
@@ -73,8 +81,10 @@ public class ScoringPage extends AppCompatActivity {
         Log.d("wrongListSize", wrongCheckList.size() + "");
 
 
-        textView2.setText("맞은 갯수="+(i-firebaseMeanList.size())+", 틀린 갯수="+firebaseMeanList.size());
-        textView3.setText((i-firebaseMeanList.size())+"/"+i);
+        // scoringDivide = 100;
+
+        textView2.setText("맞은 갯수="+(i-wrongCheckList.size())+", 틀린 갯수="+wrongCheckList.size());
+        textView3.setText((i-wrongCheckList.size())+"/"+i);
 
         ListView listView;
         ScoringPage_ListViewAdapter adapter;
@@ -90,10 +100,14 @@ public class ScoringPage extends AppCompatActivity {
         listView.setAdapter(adapter);
 
 
-        for(int j = 0; j < firebaseSpellingList.size(); j++) {
+        for(int j = 0; j < wrongCheckList.size(); j++) {
             // 아이템 추가.
+            // ArrayList 틀린 문제로 수정
             adapter.addItem(wrongCheckList.get(j),
-                    firebaseMeanList.get(j), firebaseSpellingList.get(j));
+                    firebaseMeanList.get(wrongCheckList.get(j)), firebaseSpellingList.get(wrongCheckList.get(j)));
+            ScoringFirebaseMeanList.add(firebaseMeanList.get(wrongCheckList.get(j)));
+            ScoringFirebaseSpellingList.add(firebaseSpellingList.get(wrongCheckList.get(j)));
+
         }
     }
 
@@ -103,13 +117,13 @@ public class ScoringPage extends AppCompatActivity {
         // ((QuizPage)QuizPage.context_correct).correct = 0;
         // ((QuizPage)QuizPage.context_wrong).wrong = 0;
         if (view == button) {
-            Intent intent = new Intent(ScoringPage.this, QuizPage.class);
+            Intent intent = new Intent(ScoringPage.this, WrongPage.class);
 
 
             intent.putExtra("nameList", firebaseNameList);
-            intent.putExtra("meanList", firebaseMeanList);
-            intent.putExtra("spellingList", firebaseSpellingList);
-            intent.putExtra("UID", UserId);
+            intent.putExtra("ScoringMeanList", ScoringFirebaseMeanList);
+            intent.putExtra("ScoringSpellingList", ScoringFirebaseSpellingList);
+            // intent.putExtra("ScoringDivide", scoringDivide);
 
 
             startActivity(intent);
@@ -118,7 +132,7 @@ public class ScoringPage extends AppCompatActivity {
 
             Intent intent = new Intent(this, MainActivity.class);
 
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
             startActivity(intent);
         }

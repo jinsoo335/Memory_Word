@@ -1,32 +1,24 @@
 package com.example.project;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-
 import android.view.inputmethod.InputMethodManager;
-
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-// arraylist 사용 위함
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
 
-public class QuizPage extends AppCompatActivity implements View.OnClickListener{
+public class WrongPage extends AppCompatActivity implements View.OnClickListener{
     // AppCompatActivity 클래스 상속을 통해 Activity 클래스의 API level 하위 호환 가능
 
     // 모두 View 클래스의 자식 클래스
@@ -109,9 +101,9 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
         // 리스트 목록에서 아래의 키로 4개의 값을 받는다.
         // 여기 있는 배열 리스트는 고정으로 사용된다.
         firebaseNameList =  (ArrayList<String>) getIntent().getSerializableExtra("nameList");
-        firebaseMeanList =  (ArrayList<String>) getIntent().getSerializableExtra("meanList");
-        firebaseSpellingList =  (ArrayList<String>) getIntent().getSerializableExtra("spellingList");
-        divide = (Integer) getIntent().getSerializableExtra("divide");
+        firebaseMeanList =  (ArrayList<String>) getIntent().getSerializableExtra("ScoringMeanList");
+        firebaseSpellingList =  (ArrayList<String>) getIntent().getSerializableExtra("ScoringSpellingList");
+        // divide = (Integer) getIntent().getSerializableExtra("divide");
 
 
         // context_correct = this;
@@ -450,7 +442,7 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
 
 
 
-                                Intent intent = new Intent(QuizPage.this, ScoringPage.class);
+                                Intent intent = new Intent(WrongPage.this, ScoringPage.class);
 
                                 intent.putExtra("lastAll", i);
                                 intent.putExtra("nameList", firebaseNameList);
