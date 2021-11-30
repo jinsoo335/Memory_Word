@@ -39,7 +39,6 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
 
     Button googleSignBtn;
     Button annonymousBtn;
-    Button signOutBtn;
 
 
     @Override
@@ -65,9 +64,6 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
         googleSignBtn = findViewById(R.id.Button_glogin);
         googleSignBtn.setOnClickListener(this);
 
-        signOutBtn = findViewById(R.id.signOut_btn);
-        signOutBtn.setOnClickListener(this);
-
     }
 
     // 생명주기 함수로 onCreate() 이후 실행 된다.
@@ -82,8 +78,7 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
 
         if(getUser() != null){
             Log.d("LoginForm의 ", "user " + getUser().getUid());
-            //finish();
-            //startActivity(new Intent(this, MainActivity.class));
+
         }
     }
 
@@ -160,28 +155,6 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
         });
     }
 
-    // 현재의 익명 계정과 구글 계정을 연동시키는 함수...
-    // idToken이 비어 있으면 안된다... 에러 뜸...
-    private void googleLinkAccount(String idToken){
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-
-        mAuth.getCurrentUser().linkWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Log.d("구글 통합", "성공");
-                            FirebaseUser user = task.getResult().getUser();
-                            updateUI(user);
-                        }
-                        else{
-                            Log.d("구글 통합", "실패");
-                            updateUI(null);
-                        }
-                    }
-                });
-    }
-
 
     public void unlink(String providerId){
         mAuth.getCurrentUser().unlink(providerId)
@@ -215,15 +188,21 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if(view == googleSignBtn){
+            signIn();
             Thread signThread = new Thread("signThread"){
                 @Override
                 public void run() {
                     super.run();
                     try {
-                        signIn();
-                        Thread.sleep(1000);
+                        ArrayList<String> nameList = new ArrayList<>();
+                        Thread.sleep(1800);
+                        ReadAndWrite DBHelper = new ReadAndWrite(getUser().getUid(), nameList, new ArrayList<>(), new ArrayList<>());
+                        DBHelper.getFirstListListener();
 
-                        startActivity(new Intent(LoginForm.this, MainActivity.class));
+                        Thread.sleep(500);
+                        Intent intent = new Intent(LoginForm.this, MainActivity.class);
+                        intent.putExtra("nameList", nameList);
+                        startActivity(intent);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -233,15 +212,23 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
 
         }
         else if(view == annonymousBtn){
+            signInAnonymously();
             Thread signThread = new Thread("signThread"){
+
                 @Override
                 public void run() {
                     super.run();
                     try {
-                        signInAnonymously();
-                        Thread.sleep(100);
 
-                        startActivity(new Intent(LoginForm.this, MainActivity.class));
+                        ArrayList<String> nameList = new ArrayList<>();
+                        Thread.sleep(1500);
+                        ReadAndWrite DBHelper = new ReadAndWrite(getUser().getUid(), nameList, new ArrayList<>(), new ArrayList<>());
+                        DBHelper.getFirstListListener();
+
+                        Thread.sleep(100);
+                        Intent intent = new Intent(LoginForm.this, MainActivity.class);
+                        intent.putExtra("nameList", nameList);
+                        startActivity(intent);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -249,9 +236,5 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
             };
             signThread.start();
         }
-        else if(view == signOutBtn){
-            FirebaseAuth.getInstance().signOut();
-        }
-
     }
 }

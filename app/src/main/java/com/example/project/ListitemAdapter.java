@@ -94,7 +94,7 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
         Listitem item = items.get(position);
 
         listNameText.setText(item.getListname());
-        listSizeText.setText(item.getListsize());
+        //listSizeText.setText(item.getListsize());
 
         quizPageMeanBtn.setOnClickListener(new View.OnClickListener() {
             @Override

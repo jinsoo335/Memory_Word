@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,19 +24,24 @@ public class FirstPage extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_page);
 
-        setContentView(R.layout.activity_first_page);
-        getSupportActionBar().setIcon(R.drawable.tree_icon);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+//        getSupportActionBar().setIcon(R.drawable.tree_icon);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        ViewGroup linear = findViewById(R.id.linear_viewGroup);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
 
-        linear.setOnClickListener(new View.OnClickListener() {
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-
+            public void run() {
                 if(mUser != null){
                     Log.d("user", mUser.getUid());
 
@@ -48,7 +54,7 @@ public class FirstPage extends AppCompatActivity{
                         public void run() {
                             super.run();
                             try {
-                                Thread.sleep(500);
+                                Thread.sleep(1000);
                                 Intent intent = new Intent(FirstPage.this, MainActivity.class);
                                 intent.putExtra("nameList", nameList);
                                 startActivity(intent);
@@ -66,11 +72,6 @@ public class FirstPage extends AppCompatActivity{
                     startActivity(new Intent(FirstPage.this, LoginForm.class));
                 }
             }
-        });
-
-
-
+        }, 1000);
     }
-
-
 }

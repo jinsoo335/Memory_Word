@@ -19,6 +19,13 @@
             android:layout_height="wrap_content"
             android:text="저장" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/list_nmae_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="리스트 이름"/>
+
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"

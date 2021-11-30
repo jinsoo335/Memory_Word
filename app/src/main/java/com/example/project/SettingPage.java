@@ -59,6 +59,7 @@ public class SettingPage extends AppCompatActivity implements View.OnClickListen
         if(view == signDeleteBtn){
             if(user != null){
                 deleteUser();
+                startActivity(new Intent(SettingPage.this, LoginForm.class));
             }
             else{
                 Toast toast = Toast.makeText(this, "로그인 되어 있는 유저가 없습니다. ", Toast.LENGTH_SHORT);
@@ -78,6 +79,7 @@ public class SettingPage extends AppCompatActivity implements View.OnClickListen
         }
         else if(view == signOutBtn){
             FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(SettingPage.this, LoginForm.class));
         }
     }
 
@@ -90,9 +92,17 @@ public class SettingPage extends AppCompatActivity implements View.OnClickListen
 
     private void deleteUser(){
         String UID = user.getUid();
+        FirebaseAuth.getInstance().signOut();
         user.delete();
 
-        DBHelper.rootDatabase.child(UID).removeValue();
+        try{
+            DBHelper.userDatabase.removeValue();
+        }
+        catch (Exception e){
+            if(e instanceof NullPointerException){
+                Log.d("NullPointerException", "DB에 리스트 추가 안함");
+            }
+        }
     }
 
     @Override

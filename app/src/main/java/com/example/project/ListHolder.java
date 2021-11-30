@@ -17,7 +17,7 @@ public class ListHolder {
     public ListHolder(View root){
         woodImage = root.findViewById(R.id.wood_block);
         listNameText = root.findViewById(R.id.listname);
-        listSizeText = root.findViewById(R.id.listsize);
+        //listSizeText = root.findViewById(R.id.listsize);
         showListBtn = root.findViewById(R.id.show_list_btn);
         quizPageBtn_Mean = root.findViewById(R.id.quiz_page_Meanbtn);
         quizPageBtn_Spelling = root.findViewById(R.id.quiz_page_Spellingbtn);
