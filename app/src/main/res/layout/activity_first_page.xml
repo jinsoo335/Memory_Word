@@ -25,11 +25,12 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="단어"
-            android:background="@color/white"
-            android:textSize="50dp"
+            android:textSize="60dp"
             android:textStyle="bold"
             android:layout_marginBottom="20dp"
             android:textColor="#25dd9f"
+            android:fontFamily="@font/logofont"
+
             ></TextView>
         <TextView
             android:layout_marginTop="20dp"
@@ -37,11 +38,12 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="나무"
-            android:background="@color/white"
-            android:textSize="50dp"
+            android:textSize="60dp"
             android:textStyle="bold"
             android:layout_marginBottom="20dp"
             android:textColor="#bd7766"
+            android:fontFamily="@font/logofont"
+
             ></TextView>
 
     </LinearLayout>

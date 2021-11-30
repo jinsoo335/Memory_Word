@@ -40,6 +40,10 @@ public class SettingPage extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_page);
 
+        getSupportActionBar().setIcon(R.drawable.tree_icon);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         signMergeBtn = findViewById(R.id.setting_sign_merge_btn);
         signMergeBtn.setOnClickListener(this);
 

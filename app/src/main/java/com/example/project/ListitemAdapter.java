@@ -1,4 +1,6 @@
 package com.example.project;
+import static android.view.View.GONE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -24,7 +26,8 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
     Button quizPageMeanBtn;
     Button quizPageSpellingBtn;
 
-    ImageView woodImage;
+    ImageView delView;
+    TextView woodImage;
     // 뜻, 스펠링 구분 정수
     int divide;
 
@@ -90,11 +93,30 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
         quizPageSpellingBtn = holder.quizPageBtn_Spelling;
 
         woodImage = holder.woodImage;
+        delView = holder.image_x;
 
         Listitem item = items.get(position);
 
         listNameText.setText(item.getListname());
         //listSizeText.setText(item.getListsize());
+
+        delView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Log.d("클릭...", "--------------");
+                String listName = listNameText.getText().toString();
+                DBHelper.userDatabase.child(listName).removeValue();
+
+                listNameText.setVisibility(GONE);
+                showListBtn.setVisibility(GONE);
+                quizPageMeanBtn.setVisibility(GONE);
+                quizPageSpellingBtn.setVisibility(GONE);
+                delView.setVisibility(GONE);
+                woodImage.setVisibility(GONE);
+            }
+        });
+
 
         quizPageMeanBtn.setOnClickListener(new View.OnClickListener() {
             @Override

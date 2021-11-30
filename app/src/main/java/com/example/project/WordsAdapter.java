@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,8 +29,8 @@ public class WordsAdapter extends ArrayAdapter<Listitem>{
     int resID;
     ArrayList<Listitem> items;
 
-    Button wordFixBtn;
-    Button wordDeleteBtn;
+    View emptyView;
+    ImageView wordDeleteView;
 
     public WordsAdapter(Context context, int resID, ArrayList<Listitem> items, String userID,
                         String listName, ArrayList<String> meanList, ArrayList<String> spellingList){
@@ -65,16 +66,17 @@ public class WordsAdapter extends ArrayAdapter<Listitem>{
         TextView meanText = convertView.findViewById(R.id.mean_text);
         TextView spellingText = convertView.findViewById(R.id.spelling_text);
 
-        ImageView woodImage = convertView.findViewById(R.id.wood_block);
-
+        TextView woodImage = convertView.findViewById(R.id.word_wood_block);
+        emptyView = convertView.findViewById(R.id.empty_view);
+        LinearLayout linear = convertView.findViewById(R.id.word_linear_layout);
 
         Listitem item = items.get(position);
 
         meanText.setText(item.getListsize());
         spellingText.setText(item.getListname());
 
-        wordDeleteBtn = convertView.findViewById(R.id.word_delete_btn);
-        wordDeleteBtn.setOnClickListener(new View.OnClickListener() {
+        wordDeleteView = convertView.findViewById(R.id.word_delete_view);
+        wordDeleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("삭제 버튼", "누름?");
@@ -85,7 +87,9 @@ public class WordsAdapter extends ArrayAdapter<Listitem>{
                 meanText.setVisibility(GONE);
                 spellingText.setVisibility(GONE);
                 woodImage.setVisibility(GONE);
-                wordDeleteBtn.setVisibility(GONE);
+                wordDeleteView.setVisibility(GONE);
+                emptyView.setVisibility(GONE);
+                linear.setVisibility(GONE);
             }
         });
 

@@ -5,28 +5,69 @@
     android:orientation="vertical">
 
 
-    <EditText
-        android:id="@+id/mean_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="단어 뜻을 입력해주세요" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/spelling_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="스팰링을 입력해주세요" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
 
-    <Button
-        android:id="@+id/save_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="저장" />
+            <EditText
+                android:id="@+id/spelling_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="스팰링 입력" />
+
+            <EditText
+                android:id="@+id/mean_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="단어 뜻 입력" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="추가"
+            android:background="@drawable/button_border"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="70dp"
+            android:background="#26b980" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="18dp"
+            android:layout_marginTop="28dp"
+            android:textSize="20dp"
+            android:fontFamily="@font/logofont"
+            android:text="단어 목록" />
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/mean_spelling_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#bc6661"
+        android:dividerHeight="2dp"/>
 
 
 </LinearLayout>

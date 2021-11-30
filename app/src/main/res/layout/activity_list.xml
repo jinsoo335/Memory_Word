@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -12,25 +13,50 @@
             android:id="@+id/listname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="리스트를 입력해주세요" />
+            android:hint="단어장 이름 입력"
+            android:layout_marginRight="18dp"
+            android:layout_marginLeft="20dp"/>
         <Button
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="저장" />
+            android:textSize="15dp"
+            android:text="추가"
+            android:textStyle="bold"
+            android:fontFamily="@font/logofont"
+            android:background="@drawable/button_border"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/list_nmae_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="리스트 이름"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="0px">
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="70dp"
+            android:background="#26b980" />
+
+        <TextView
+            android:id="@+id/list_nmae_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="18dp"
+            android:layout_marginTop="28dp"
+            android:textSize="20dp"
+            android:fontFamily="@font/logofont"
+            android:text="단어장 이름" />
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:divider="#bc6661"
+        android:dividerHeight="2dp" />
 
 
 </LinearLayout>

@@ -7,20 +7,48 @@
     android:padding="50dp">
 
 
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:paddingTop="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="암기장"
-        android:textColor="@color/black"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
-        >
-    </TextView>
+        android:orientation="horizontal"
+        android:paddingRight="50dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/tree_icon" />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="단어"
+            android:textSize="60dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            android:textColor="#25dd9f"
+            android:fontFamily="@font/logofont"
+
+            ></TextView>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="나무"
+            android:textSize="60dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            android:textColor="#bd7766"
+            android:fontFamily="@font/logofont"
+
+            ></TextView>
+
+    </LinearLayout>
+
     <TextView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="150dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -31,28 +59,20 @@
         android:layout_marginBottom="10dp"
         >
     </TextView>
-    <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:background="@null"
-        android:src="@drawable/login_icon"
-        android:scaleType="fitXY"
-        android:layout_gravity="center"
-        ></ImageView>
-
 
     <!--
     구글로 로그인하는 버튼
     -->
     <Button
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Log in with Google"
-        android:textColor="@color/white"
         android:drawableLeft="@drawable/google"
         android:background="@drawable/bin_blue"
         android:id="@+id/Button_glogin"
+        android:fontFamily="@font/nanumori"
+        android:textStyle="bold"
         >
     </Button>
     <!--
@@ -60,14 +80,14 @@
     -->
     <Button
         android:id="@+id/anonymous_btn"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Log in"
-        android:textColor="@color/white"
         android:drawableLeft="@drawable/anonymous"
         android:background="@drawable/bin_gray"
-
+        android:fontFamily="@font/nanumori"
+        android:textStyle="bold"
         >
     </Button>
 

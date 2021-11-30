@@ -13,13 +13,16 @@
         android:theme="@style/Theme.Project">
         <activity
             android:name=".SettingPage"
-            android:exported="false" />
+            android:exported="true"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".WrongPage"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/NoTheme"/>
         <activity
             android:name=".MeanAndSpellingPage"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".FirstPage"
             android:exported="true"
@@ -45,7 +48,7 @@
         <activity
             android:name=".QuizPage"
             android:exported="true"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/NoTheme" />
         <activity
             android:name=".SignPart"
             android:exported="true"

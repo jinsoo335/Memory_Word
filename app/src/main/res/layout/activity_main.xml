@@ -11,12 +11,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="단어장 목록"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="27dp"
-        android:background="@color/black"
-        android:width="412dp"
-        android:height="365dp"
+        android:background="@drawable/button_border"
+        android:width="200dp"
+        android:height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+
         />
 
     <Button
@@ -24,12 +27,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="설정"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="27dp"
-        android:background="@color/black"
-        android:width="412dp"
-        android:height="365dp"
+        android:background="@drawable/button_border"
+        android:fontFamily="@font/nanumori"
+        android:width="200dp"
+        android:height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
         />
 
 
