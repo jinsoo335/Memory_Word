@@ -459,7 +459,7 @@ public class QuizPage extends AppCompatActivity implements View.OnClickListener{
                                 // intent.putExtra("UID", UserId);
                                 Log.d("total spellingWrongSize", spellWrongCheckList.size() + "");
                                 intent.putExtra("wrongCheck", spellWrongCheckList);
-
+                                intent.putExtra("divide", divide);
 
 
                                 startActivity(intent);

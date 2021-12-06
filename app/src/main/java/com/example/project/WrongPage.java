@@ -103,7 +103,7 @@ public class WrongPage extends AppCompatActivity implements View.OnClickListener
         firebaseNameList =  (ArrayList<String>) getIntent().getSerializableExtra("nameList");
         firebaseMeanList =  (ArrayList<String>) getIntent().getSerializableExtra("ScoringMeanList");
         firebaseSpellingList =  (ArrayList<String>) getIntent().getSerializableExtra("ScoringSpellingList");
-        // divide = (Integer) getIntent().getSerializableExtra("divide");
+        divide = (Integer) getIntent().getSerializableExtra("divide");
 
 
         // context_correct = this;
@@ -451,7 +451,7 @@ public class WrongPage extends AppCompatActivity implements View.OnClickListener
                                 // intent.putExtra("UID", UserId);
                                 Log.d("total spellingWrongSize", spellWrongCheckList.size() + "");
                                 intent.putExtra("wrongCheck", spellWrongCheckList);
-
+                                intent.putExtra("divide", divide);
 
 
                                 startActivity(intent);

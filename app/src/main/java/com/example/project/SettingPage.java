@@ -23,6 +23,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -62,7 +64,7 @@ public class SettingPage extends AppCompatActivity implements View.OnClickListen
         updateUI();
         if(view == signDeleteBtn){
             if(user != null){
-                deleteUser();
+                deleteUser(FirebaseAuth.getInstance().getCurrentUser());
                 startActivity(new Intent(SettingPage.this, LoginForm.class));
             }
             else{
@@ -94,19 +96,19 @@ public class SettingPage extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    private void deleteUser(){
+    private void deleteUser(FirebaseUser user){
         String UID = user.getUid();
-        FirebaseAuth.getInstance().signOut();
-        user.delete();
 
         try{
-            DBHelper.userDatabase.removeValue();
+            DatabaseReference rt = FirebaseDatabase.getInstance().getReference();
+            rt.child(UID).removeValue();
         }
         catch (Exception e){
             if(e instanceof NullPointerException){
                 Log.d("NullPointerException", "DB에 리스트 추가 안함");
             }
         }
+        user.delete();
     }
 
     @Override
@@ -149,7 +151,6 @@ public class SettingPage extends AppCompatActivity implements View.OnClickListen
                         Log.d("prev user", prevUID);
 
                         if(currentUID.equals(prevUID)){
-
                             return;
                         }
 
@@ -187,7 +188,7 @@ public class SettingPage extends AppCompatActivity implements View.OnClickListen
                                         }
                                     }
 
-                                    prevUser.delete();
+                                    deleteUser(prevUser);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }

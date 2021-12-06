@@ -44,6 +44,9 @@ public class ScoringPage extends AppCompatActivity {
     // int scoringDivide;
 
 
+    //뜻, 스펠링 구분
+    int divide;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +79,7 @@ public class ScoringPage extends AppCompatActivity {
         firebaseMeanList =  (ArrayList<String>) getIntent().getSerializableExtra("meanList");
         firebaseSpellingList =  (ArrayList<String>) getIntent().getSerializableExtra("spellingList");
         wrongCheckList = (ArrayList<Integer>) getIntent().getSerializableExtra("wrongCheck");
+        divide = (Integer) getIntent().getSerializableExtra("divide");
         UserId = (String)getIntent().getSerializableExtra("UID");
         i = (int)getIntent().getSerializableExtra("lastAll");
         Log.d("wrongListSize", wrongCheckList.size() + "");
@@ -89,11 +93,11 @@ public class ScoringPage extends AppCompatActivity {
         ListView listView;
         ScoringPage_ListViewAdapter adapter;
 
+
         // 다 맞을 시 '틀린 문제 다시 풀기 버튼 제거'
         if(wrongCheckList.size() == 0){
             button.setVisibility(View.GONE);
         }
-
 
         // Adapter 생성
         adapter = new ScoringPage_ListViewAdapter() ;
@@ -129,6 +133,7 @@ public class ScoringPage extends AppCompatActivity {
             intent.putExtra("nameList", firebaseNameList);
             intent.putExtra("ScoringMeanList", ScoringFirebaseMeanList);
             intent.putExtra("ScoringSpellingList", ScoringFirebaseSpellingList);
+            intent.putExtra("divide", divide);
             // intent.putExtra("ScoringDivide", scoringDivide);
 
 

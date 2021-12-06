@@ -214,15 +214,13 @@ public class LoginForm extends AppCompatActivity implements View.OnClickListener
         else if(view == annonymousBtn){
             signInAnonymously();
             Thread signThread = new Thread("signThread"){
-
                 @Override
                 public void run() {
                     super.run();
                     try {
-
                         ArrayList<String> nameList = new ArrayList<>();
                         Thread.sleep(1500);
-                        ReadAndWrite DBHelper = new ReadAndWrite(getUser().getUid(), nameList, new ArrayList<>(), new ArrayList<>());
+                        ReadAndWrite DBHelper = new ReadAndWrite(FirebaseAuth.getInstance().getCurrentUser().getUid(), nameList, new ArrayList<>(), new ArrayList<>());
                         DBHelper.getFirstListListener();
 
                         Thread.sleep(100);
