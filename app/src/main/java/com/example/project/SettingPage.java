@@ -149,6 +149,7 @@ public class SettingPage extends AppCompatActivity implements View.OnClickListen
                         Log.d("prev user", prevUID);
 
                         if(currentUID.equals(prevUID)){
+
                             return;
                         }
 

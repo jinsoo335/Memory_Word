@@ -89,6 +89,12 @@ public class ScoringPage extends AppCompatActivity {
         ListView listView;
         ScoringPage_ListViewAdapter adapter;
 
+        // 다 맞을 시 '틀린 문제 다시 풀기 버튼 제거'
+        if(wrongCheckList.size() == 0){
+            button.setVisibility(View.GONE);
+        }
+
+
         // Adapter 생성
         adapter = new ScoringPage_ListViewAdapter() ;
 

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class List extends AppCompatActivity implements View.OnClickListener{
     Button saveBtn;
 
     Handler mHandler = new Handler();
+    ListitemAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +67,10 @@ public class List extends AppCompatActivity implements View.OnClickListener{
             items.add(new Listitem(nameList.get(i), ""));
         }
 
-        ListitemAdapter ListAdapter = new ListitemAdapter(this, R.layout.item_listview, items,
+        listAdapter = new ListitemAdapter(this, R.layout.item_listview, items,
                 userID ,new ArrayList<>(), meanList, spellingList);
 
-        listView.setAdapter(ListAdapter);
-
-        //listView.setOnItemClickListener(this);
+        listView.setAdapter(listAdapter);
 
 
         //2
@@ -86,6 +86,10 @@ public class List extends AppCompatActivity implements View.OnClickListener{
     protected void onStart() {
         super.onStart();
 
+    }
+
+    public ListitemAdapter getListAdaptor(){
+        return listAdapter;
     }
 
     @Override

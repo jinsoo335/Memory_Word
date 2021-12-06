@@ -1,7 +1,9 @@
 package com.example.project;
 import static android.view.View.GONE;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,9 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class ListitemAdapter extends ArrayAdapter<Listitem>{
     String userID;
@@ -34,6 +40,8 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
     Context context;
     int resID;
     ArrayList<Listitem> items;
+
+    android.os.Handler handler = new android.os.Handler();
 
     public ListitemAdapter(Context context, int resID, ArrayList<Listitem> items, String userID,
                            ArrayList<String> nameList, ArrayList<String> meanList, ArrayList<String> spellingList){
@@ -87,13 +95,13 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
         ListHolder holder = (ListHolder) convertView.getTag();
 
         TextView listNameText = holder.listNameText;
-        TextView listSizeText = holder.listSizeText;
+        //TextView listSizeText = holder.listSizeText;
         showListBtn = holder.showListBtn;
-        quizPageMeanBtn = holder.quizPageBtn_Mean;
-        quizPageSpellingBtn = holder.quizPageBtn_Spelling;
+        quizPageMeanBtn = holder.quizPageMeanBtn;
+        quizPageSpellingBtn = holder.quizPageSpellingBtn;
 
         woodImage = holder.woodImage;
-        delView = holder.image_x;
+        delView = holder.delView;
 
         Listitem item = items.get(position);
 
@@ -108,12 +116,15 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
                 String listName = listNameText.getText().toString();
                 DBHelper.userDatabase.child(listName).removeValue();
 
-                listNameText.setVisibility(GONE);
-                showListBtn.setVisibility(GONE);
-                quizPageMeanBtn.setVisibility(GONE);
-                quizPageSpellingBtn.setVisibility(GONE);
-                delView.setVisibility(GONE);
-                woodImage.setVisibility(GONE);
+                holder.listNameText.setVisibility(GONE);
+                holder.showListBtn.setVisibility(GONE);
+                holder.quizPageMeanBtn.setVisibility(GONE);
+                holder.quizPageSpellingBtn.setVisibility(GONE);
+                holder.delView.setVisibility(GONE);
+                holder.woodImage.setVisibility(GONE);
+
+
+
             }
         });
 
@@ -143,7 +154,34 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
                             intent.putExtra("spellingList", spellingList);
                             intent.putExtra("divide", divide);
 
-                            context.startActivity(intent);
+                            if(meanList.size() != 0 ){
+                                context.startActivity(intent);
+                            }
+                            else {
+
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AlertDialog.Builder myAlertBuilder =
+                                                new AlertDialog.Builder(context);
+                                        // alert의 title과 Messege 세팅
+                                        myAlertBuilder.setTitle("경고");
+                                        myAlertBuilder.setMessage("리스트에 단어를 추가 후, 퀴즈를 실행해 주시기 바랍니다!");
+                                        // 버튼 추가 (Ok 버튼 )
+                                        myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // OK 버튼을 눌렸을 경우
+                                                Toast.makeText(context.getApplicationContext(), "Pressed OK",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                        // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성됨)
+                                        myAlertBuilder.show();
+                                    }
+                                });
+                            }
 
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -179,9 +217,35 @@ public class ListitemAdapter extends ArrayAdapter<Listitem>{
                             intent.putExtra("spellingList", spellingList);
                             intent.putExtra("divide", divide);
 
-                            context.startActivity(intent);
+                            if(meanList.size() != 0 ){
+                                context.startActivity(intent);
+                            }
+                            else {
 
-                        } catch (InterruptedException e) {
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AlertDialog.Builder myAlertBuilder =
+                                                new AlertDialog.Builder(context);
+                                        // alert의 title과 Messege 세팅
+                                        myAlertBuilder.setTitle("경고");
+                                        myAlertBuilder.setMessage("리스트에 단어를 추가 후, 퀴즈를 실행해 주시기 바랍니다!");
+                                        // 버튼 추가 (Ok 버튼 )
+                                        myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // OK 버튼을 눌렸을 경우
+                                                Toast.makeText(context.getApplicationContext(), "Pressed OK",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                        // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성됨)
+                                        myAlertBuilder.show();
+                                    }
+                                });
+                            }
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
